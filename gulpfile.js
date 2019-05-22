@@ -1,4 +1,4 @@
-var syntax         = 'sass', // Syntax: sass or scss;
+var syntax         = 'scss', // Syntax: sass or scss;
 		gulpVersion    = '4'; // Gulp version: 3 or 4
 		gmWatch        = false; // ON/OFF GraphicsMagick watching "img/_src" folder (true/false). Linux install gm: sudo apt update; sudo apt install graphicsmagick
 
@@ -31,18 +31,18 @@ gulp.task('browser-sync', function() {
 });
 
 const pathScripts = [
-    'scripts/**/*.js',
-    'node_modules/@fortawesome/fontawesome-free/js/fontawesome.js',
-    'node_modules/@fortawesome/fontawesome-free/js/all.js',
-    'node_modules/bootstrap/dist/js/bootstrap.js',
+    'app/scripts/common.js',
+    'node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js',
+    'node_modules/@fortawesome/fontawesome-free/js/all.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/popper.js/dist/popper.js'
+    'node_modules/jquery/dist/jquery.min.js',
+   // 'node_modules/popper.js/dist/popper.min.js'
 ];
 
 
 const pathStyles = [
-    'stylesheets/**/*.css',
+    'app/'+syntax+'/**/*.'+syntax+'',
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/bootstrap/dist/css/bootstrap-grid.css',
     'node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
@@ -51,7 +51,7 @@ const pathStyles = [
 
 // Sass|Scss Styles
 gulp.task('styles', function() {
-	return gulp.src('app/'+syntax+'/**/*.'+syntax+'')
+	return gulp.src(pathStyles)
 	.pipe(sass({ outputStyle: 'expanded' }).on("error", notify.onError()))
 	.pipe(rename({ suffix: '.min', prefix : '' }))
 	.pipe(autoprefixer(['last 15 versions']))
@@ -62,12 +62,9 @@ gulp.task('styles', function() {
 
 // JS
 gulp.task('scripts', function() {
-	return gulp.src([
-		'app/libs/jquery/dist/jquery.min.js',
-		'app/js/common.js', // Always at the end
-		])
-	.pipe(concat('scripts.min.js'))
-	// .pipe(uglify()) // Mifify js (opt.)
+	return gulp.src(pathScripts)
+	//.pipe(concat('scripts.min.js'))
+	 .pipe(uglify()) // Mifify js (opt.)
 	.pipe(gulp.dest('app/js'))
 	.pipe(browserSync.reload({ stream: true }))
 });
@@ -123,8 +120,8 @@ if (gulpVersion == 3) {
 	gmWatch && taskArr.unshift('img');
 
 	gulp.task('watch', taskArr, function() {
-		gulp.watch('app/'+syntax+'/**/*.'+syntax+'', ['styles']);
-		gulp.watch(['libs/**/*.js', 'app/js/common.js'], ['scripts']);
+		gulp.watch(pathStyles, ['styles']);
+		gulp.watch(pathScripts, ['scripts']);
 		gulp.watch('app/*.html', ['code']);
 		gmWatch && gulp.watch('app/img/_src/**/*', ['img']);
 	});
@@ -139,8 +136,8 @@ if (gulpVersion == 4) {
 	gulp.task('img', gulp.parallel('img1x', 'img2x'));
 
 	gulp.task('watch', function() {
-		gulp.watch('app/'+syntax+'/**/*.'+syntax+'', gulp.parallel('styles'));
-		gulp.watch(['libs/**/*.js', 'app/js/common.js'], gulp.parallel('scripts'));
+		gulp.watch(pathStyles, gulp.parallel('styles'));
+		gulp.watch(pathScripts, gulp.parallel('scripts'));
 		gulp.watch('app/*.html', gulp.parallel('code'));
 		gmWatch && gulp.watch('app/img/_src/**/*', gulp.parallel('img')); // GraphicsMagick watching image sources if allowed.
 	});
