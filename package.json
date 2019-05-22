@@ -1,0 +1,40 @@
+{
+  "name": "start_b4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Osvax Alexo",
+  "license": "MIT",
+  "homepage": "https://github.com/osvax/my_start_b4.git",
+  "bugs": {
+    "url": "https://github.com/osvax/my_start_b4.git",
+    "email": "siteavalexo@yandex.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osvax/my_start_b4.git"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.2",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.5",
+	"del": "^4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+	"gulp-concat": "^2.6.1",
+	"gulp-image-resize": "^0.13.0",
+	"gulp-imagemin": "^5.0.3",
+	"gulp-notify": "^3.2.0",
+	"gulp-rsync": "0.0.8",
+	"gulp-sass": "^4.0.2",
+	"gulp-uglify": "^3.0.2",
+	"gulp-util": "^3.0.8"
+  }
+}
